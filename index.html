@@ -28,7 +28,7 @@
     <div class="particles" id="particles"></div><div class="butterflies" id="butterflies"></div><div class="flash" id="flash"></div>
     <div class="slides" id="slides">
       <section class="slide opening" style="--art:url('assets/aqdi-master-slide-00.jpg')" aria-label="Luxury envelope">
-        <div class="stage envelope-stage"><div class="art-card"></div><div class="pop-card" aria-hidden="true"></div><button class="seal-focus" id="seal" aria-label="Open invitation"></button></div>
+        <div class="stage envelope-stage"><div class="art-card"></div><button class="seal-focus" id="seal" aria-label="Open invitation"></button></div>
       </section>
       <section class="slide art-only" style="--art:url('assets/aqdi-master-slide-01.jpg')" aria-label="Bismillah opening">
         <div class="stage"><div class="art-card"></div></div>
@@ -37,10 +37,10 @@
         <div class="stage"><div class="art-card"></div></div>
       </section>
       <section class="slide" style="--art:url('assets/aqdi-master-slide-03.jpg')" aria-label="Scratch and reveal">
-        <div class="stage"><div class="art-card"></div><div class="scratch-wrap" id="scratch"><canvas id="scratchCanvas"></canvas></div></div>
+        <div class="stage"><div class="art-card"></div></div>
       </section>
       <section class="slide" style="--art:url('assets/aqdi-master-slide-04.jpg')" aria-label="Countdown">
-        <div class="stage"><div class="art-card"></div><div class="count-live" id="countdown"><div><b>00</b><span>Days</span></div><div><b>00</b><span>Hours</span></div><div><b>00</b><span>Minutes</span></div><div><b>00</b><span>Seconds</span></div></div></div>
+        <div class="stage"><div class="art-card"></div></div>
       </section>
       <section class="slide art-only" style="--art:url('assets/aqdi-master-slide-05.jpg')" aria-label="Venue">
         <div class="stage"><div class="art-card"></div></div>
@@ -70,7 +70,7 @@
     function show(i){setActive(i);document.getElementById('app').scrollTo({top:state.index*window.innerHeight,behavior:'smooth'})}
     document.getElementById('prev').onclick=()=>show(state.index-1);document.getElementById('next').onclick=()=>show(state.index+1);
     document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')show(state.index+1);if(e.key==='ArrowLeft')show(state.index-1)});
-    document.getElementById('seal').onclick=()=>{document.querySelector('.opening').classList.add('open');flash.classList.add('on');setTimeout(()=>flash.classList.remove('on'),1200);setTimeout(()=>show(1),2100)};
+    document.getElementById('seal').onclick=()=>{document.querySelector('.opening').classList.add('open');flash.classList.add('on');setTimeout(()=>{flash.classList.remove('on');show(1)},950)};
     function particles(){const p=document.getElementById('particles');for(let i=0;i<56;i++){const s=document.createElement('i');s.className='particle';s.style.left=Math.random()*100+'vw';s.style.setProperty('--d',9+Math.random()*18+'s');s.style.animationDelay=-Math.random()*18+'s';p.appendChild(s)}for(let i=0;i<10;i++){const b=document.createElement('i');b.className='butterfly';b.textContent=i%2?'✦':'♡';b.style.left=8+Math.random()*84+'vw';b.style.top=14+Math.random()*68+'vh';b.style.animationDelay=-Math.random()*9+'s';butterflies.appendChild(b)}}particles();
     function tick(){const ms=state.eventDate-new Date();const s=Math.max(0,Math.floor(ms/1000));const vals=[Math.floor(s/86400),Math.floor(s/3600)%24,Math.floor(s/60)%60,s%60];document.querySelectorAll('#countdown b').forEach((b,i)=>b.textContent=String(vals[i]).padStart(2,'0'))}tick();setInterval(tick,1000);
     function guest(){const visible=document.getElementById('guestName'),dash=document.getElementById('dashGuest');return ((visible&&visible.value)||(dash&&dash.value)||'Honoured Guest').trim()}
@@ -81,7 +81,7 @@
     document.getElementById('dashToggle').onclick=()=>document.getElementById('dashPanel').classList.toggle('open');
     function drawQR(text){const c=document.getElementById('qrCanvas'),x=c.getContext('2d'),n=21,cell=c.width/n;x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.fillStyle='#2f2418';function sq(a,b,w){x.fillRect(a*cell,b*cell,w*cell,w*cell)}[[0,0],[14,0],[0,14]].forEach(p=>{sq(p[0],p[1],7);x.fillStyle='#fff';sq(p[0]+1,p[1]+1,5);x.fillStyle='#2f2418';sq(p[0]+2,p[1]+2,3)});let h=0;for(let i=0;i<text.length;i++)h=(h*31+text.charCodeAt(i))>>>0;for(let y=0;y<n;y++)for(let a=0;a<n;a++){const finder=(a<8&&y<8)||(a>12&&y<8)||(a<8&&y>12);if(!finder&&(((a*17+y*29+h)>>((a+y)%13))&1))sq(a,y,1)}}
     drawQR(state.passKey);
-    function scratch(){const c=document.getElementById('scratchCanvas');if(!c)return;const wrap=document.getElementById('scratch'),ctx=c.getContext('2d');function size(){const r=c.getBoundingClientRect();c.width=r.width;c.height=r.height;paint()}function paint(){const g=ctx.createLinearGradient(0,0,c.width,c.height);g.addColorStop(0,'rgba(100,70,28,.97)');g.addColorStop(.5,'rgba(222,190,108,.97)');g.addColorStop(1,'rgba(101,70,28,.97)');ctx.globalCompositeOperation='source-over';ctx.fillStyle=g;ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle='rgba(255,248,220,.18)';for(let i=0;i<24;i++){ctx.beginPath();ctx.arc((i*37)%c.width,(i*53)%c.height,2.2,0,Math.PI*2);ctx.fill()}}function finishIfClear(){const data=ctx.getImageData(0,0,c.width,c.height).data;let clear=0,total=data.length/4;for(let i=3;i<data.length;i+=16)if(data[i]<20)clear++;if(clear/(total/4)>.38){ctx.clearRect(0,0,c.width,c.height);wrap.classList.add('done')}}let down=false;function clear(e){if(wrap.classList.contains('done'))return;if(!down&&e.type!=='pointerdown')return;down=true;const r=c.getBoundingClientRect(),x=(e.clientX-r.left),y=(e.clientY-r.top);ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(x,y,28,0,Math.PI*2);ctx.fill();finishIfClear()}c.addEventListener('pointerdown',clear);c.addEventListener('pointermove',clear);window.addEventListener('pointerup',()=>down=false);new ResizeObserver(size).observe(c)}scratch();
+    function scratch(){}
     const app=document.getElementById('app');let scrollTimer;app.addEventListener('scroll',()=>{clearTimeout(scrollTimer);scrollTimer=setTimeout(()=>setActive(Math.round(app.scrollTop/window.innerHeight)),80)},{passive:true});
     const saved=localStorage.getItem('aqdiGuestControl');if(saved){try{const j=JSON.parse(saved);document.getElementById('dashStatus').textContent='Saved guest: '+j.guest+' / '+j.pass;document.getElementById('passKey').textContent=j.pass;drawQR(j.pass)}catch(e){}}
     show(0);
