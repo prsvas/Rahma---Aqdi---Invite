@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#102e27"><title>AQDI V2 · First visual checkpoint</title><link rel="stylesheet" href="css/main.css"></head>
+<body>
+<header class="toolbar"><div><strong>AQDI V2</strong><small>First visual checkpoint · reference artwork</small></div><button id="info" aria-label="Review notes">Notes</button></header>
+<main>
+<section id="intro" aria-label="Opening motion preview">
+<div class="stage" id="stage">
+<div class="reveal"><img src="assets/slides/slide-03.png" alt="Approved Bismillah storyboard panel"></div>
+<div class="architecture" aria-hidden="true"><div class="light"></div><div class="arch a3"></div><div class="arch a2"></div><div class="arch a1"></div><div class="floor"></div></div>
+<div class="mosque" aria-hidden="true">
+<img class="gate-frame" src="assets/slides/slide-02.png" alt="">
+<img class="gate gate-left" src="assets/slides/slide-02.png" alt="">
+<img class="gate gate-right" src="assets/slides/slide-02.png" alt="">
+</div>
+<div class="wrapper" aria-hidden="true"><img class="paper paper-left" src="assets/slides/slide-01.png" alt=""><img class="paper paper-right" src="assets/slides/slide-01.png" alt=""></div>
+<div class="birds" id="birds" aria-hidden="true"></div><div class="glow" aria-hidden="true"></div>
+<button class="open-hit" id="open" aria-label="Open invitation"></button>
+</div>
+<div class="intro-controls"><p id="intro-status" role="status">Tap the wrapper to open</p><div><button id="skip">Skip intro</button><button id="replay">Replay intro</button><button id="browse">View 16 panels</button></div></div>
+</section>
+<section id="viewer" hidden aria-label="Extracted storyboard review"><div class="panel-holder"><img id="panel" src="assets/slides/slide-01.png" alt=""></div><nav class="viewer-controls" aria-label="Panel navigation"><button id="previous" aria-label="Previous panel">↑</button><span id="counter" aria-live="polite"></span><button id="next" aria-label="Next panel">↓</button><button id="intro-back">Intro</button></nav></section>
+</main>
+<dialog id="notes"><h1>First visual checkpoint</h1><p>All 16 panels are individually extracted at their original resolution. Artwork is contained in the viewing area without stretching or cropping; navigation and labels sit outside the artwork.</p><p>This package is for reviewing extraction and opening motion. Small storyboard crops are not final high-resolution masters. The CSS interior and vector birds are motion studies, not approved replacement artwork.</p><p>The 16-panel viewer preserves the storyboard exactly, including its unresolved wording, palette, phone numbers and printed QR. These are reference content: RSVP, Maps and security passes are not operational.</p><p>The separate approved dress-code JPEG and all five original photographs are included unchanged. Two gallery photos and the original Serena image are missing.</p><p>Confirm programme names/times and provide high-resolution artwork before production. No backend, valid guest passes or live deployment has been created.</p><a href="assets/dress-code/approved-palette.jpg" target="_blank" rel="noopener">View authoritative dress-code palette</a><form method="dialog"><button>Close notes</button></form></dialog>
+<script src="js/config.js"></script><script src="js/app.js"></script>
+</body></html>
