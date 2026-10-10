@@ -26,3 +26,23 @@
 
 /* Exact contained stage dimensions are fitted by JS; no stretching. */
 .stage{flex:none;max-width:none;aspect-ratio:2/3;background:#102e27}.entrance{width:100%;height:100%}.reveal{opacity:0}.reveal img{background:#102e27}.running .reveal{animation:revealBismillah 1.5s 10.3s both}.done .reveal{opacity:1}.wrapper{height:89.26%;margin:auto}.intro-controls{flex:none}.toolbar small{letter-spacing:.3px}@keyframes revealBismillah{to{opacity:1}}
+
+/* Phase 2. Every new rule is scoped away from the approved opening. */
+#p2-canvas{position:relative;flex:none;isolation:isolate;container-type:inline-size;background:transparent}
+#p2-canvas .p2-art{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;object-fit:contain;box-shadow:none;display:block}
+#p2-canvas .p2-slot,#p2-canvas .p2-palette{position:absolute;margin:0;padding:0;border:0;border-radius:0;overflow:hidden;box-shadow:none;background:#ecdbc1;display:block}
+#p2-canvas .p2-slot img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;display:block;box-shadow:none}
+#p2-canvas .p2-palette img{width:100%;height:100%;max-width:none;max-height:none;object-fit:contain;display:block;box-shadow:none}
+#p2-canvas .p2-slot:hover{background:#ecdbc1}#p2-canvas .p2-slot:focus-visible{outline:2px solid #d9b76f;outline-offset:-2px}
+#p2-canvas .p2-countdown{position:absolute;display:block;background:none;border:0;border-radius:0;color:#183c2a;padding:0;margin:0;box-shadow:none;font-family:Georgia,serif}
+#p2-canvas .p2-countdown:hover{background:none}#p2-canvas .p2-countdown:focus-visible{outline:1px solid #917036;outline-offset:2px}
+#p2-canvas .p2-count-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(8px * var(--p2-scale));height:100%}
+#p2-canvas .p2-count-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+#p2-canvas .p2-count-cell strong{font-size:calc(36px * var(--p2-scale));font-weight:600;font-variant-numeric:tabular-nums}
+#p2-canvas .p2-count-cell span{font-size:calc(18px * var(--p2-scale));margin-top:calc(3px * var(--p2-scale))}
+#p2-tools{display:flex;justify-content:center;flex:none;height:32px}#p2-tools button{padding:5px 14px;font-size:13px}
+#p2-reader{width:min(620px,94vw);max-height:90dvh;padding:24px;line-height:1.65;font-family:Georgia,serif;overscroll-behavior:contain}
+#p2-reader h1{font-size:26px;margin:0 0 12px}#p2-reader h2{font-size:19px;line-height:1.5;margin:6px 0}#p2-reader p,#p2-reader li{font-size:18px}
+#p2-reader .p2-programme-item{padding:14px 0;border-top:1px solid #bc9b6155}#p2-reader .p2-time{font-size:18px;color:#805b20;font-weight:bold;margin:0}#p2-reader .p2-arabic{font-size:25px;text-align:center}
+#p2-reader .p2-count-large{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:20px 0;text-align:center}#p2-reader .p2-count-cell strong{display:block;font-size:40px;font-variant-numeric:tabular-nums}#p2-reader .p2-count-cell span{display:block;font-size:17px}
+#p2-photo-view{width:min(850px,96vw);max-height:94dvh;padding:12px;background:#102e27;border-color:#c7a66b;overscroll-behavior:contain}#p2-full-photo{display:block;width:100%;height:75dvh;object-fit:contain}#p2-photo-view form{text-align:center;margin-top:8px}
