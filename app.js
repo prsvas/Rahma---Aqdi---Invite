@@ -1,6 +1,6 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id),stage=$('stage'),intro=$('intro'),viewer=$('viewer');
-const labels=['Wrapper','Mosque gates','Bismillah','Quran Verse','Invitation','Our Journey','Wedding Details','Serena Hotel','Dress Code','Programme Part 1','Programme Part 2','Programme Part 3','Gallery I','Gallery II','Gallery III','RSVP','Security Pass','Thank You & Dua'];
+const labels=['Wrapper','Mosque gates','Bismillah','Quran Verse','Invitation','Our Journey','Wedding Details','Serena Hotel','Dress Code','Programme Part 1','Programme Part 2','Programme Part 3','Gallery I','Gallery II','RSVP','Security Pass','Thank You & Dua'];
 let current=0,timers=[],startY=null,lastStep=0;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)');
 for(let i=0;i<3;i++){const bird=document.createElement('div');bird.className='bird';bird.innerHTML='<svg viewBox="0 0 100 70"><path class="wing back" fill="#e7e9e3" d="M49 42 Q33 9 9 5 Q14 27 43 48Z"/><path class="wing" fill="#fffef5" d="M46 44 Q57 5 83 2 Q85 18 68 37 L58 47Z"/><path fill="#fffff9" d="M27 46 L8 40 L23 55 Q45 61 68 43 Q83 48 87 40 Q89 33 83 31 Q76 29 71 36 L48 45Z"/><path fill="#d4b37a" d="M86 35 L97 39 L86 40Z"/><circle cx="83" cy="35" r="1.2" fill="#263831"/></svg>';$('birds').append(bird);}
@@ -8,7 +8,7 @@ function clearTimers(){timers.forEach(clearTimeout);timers=[];}
 function later(fn,ms){timers.push(setTimeout(fn,ms));}
 function finish(){clearTimers();stage.className='stage done';$('open').hidden=true;$('intro-status').textContent='Bismillah';$('replay').disabled=false;}
 async function play(){clearTimers();$('open').hidden=true;$('replay').disabled=true;$('intro-status').textContent='Preparing the opening';try{await Promise.all([...stage.querySelectorAll('img')].map(im=>im.decode()));}catch{ $('intro-status').textContent='An opening image could not load. Extract the complete ZIP and retry.';$('replay').disabled=false;return;}clearTimers();stage.className='stage';$('open').hidden=true;$('replay').disabled=true;if(reduce.matches){finish();return;}void stage.offsetWidth;stage.classList.add('running');$('intro-status').textContent='The wrapper opens';later(()=>$('intro-status').textContent='The mosque gates open',3400);later(()=>$('intro-status').textContent='Through the entrance into the illuminated interior',6600);later(finish,12000);}
-function showPanel(n){current=Math.max(0,Math.min(17,n));const frozen={0:'assets/reconstructed/wrapper.png',1:'assets/reconstructed/gates.png',2:'assets/reconstructed/bismillah.png',7:'assets/reconstructed/venue-final.png',15:'assets/slides/slide-14.png',16:'assets/slides/slide-15.png'};const custom=window.AQDI_PHASE2.render(current+1);$('panel').hidden=custom;if(!custom){$('panel').src=frozen[current];$('panel').alt=labels[current];}$('maps-link').hidden=current!==7;$('maps-link').href=window.AQDI_VENUE_URL||'#';$('counter').textContent=`${String(current+1).padStart(2,'0')} / 18 · ${labels[current]}`;$('previous').disabled=current===0;$('next').disabled=current===17;try{sessionStorage.setItem('aqdi-production-panel',String(current));}catch{}}
+function showPanel(n){current=Math.max(0,Math.min(16,n));const frozen={0:'assets/reconstructed/wrapper.png',1:'assets/reconstructed/gates.png',2:'assets/reconstructed/bismillah.png',7:'assets/reconstructed/venue-final.png',14:'assets/slides/slide-14.png',15:'assets/slides/slide-15.png'};const custom=window.AQDI_PHASE2.render(current+1);$('panel').hidden=custom;if(!custom){$('panel').src=frozen[current];$('panel').alt=labels[current];}$('maps-link').hidden=current!==7;$('maps-link').href=window.AQDI_VENUE_URL||'#';$('counter').textContent=`${String(current+1).padStart(2,'0')} / 17 · ${labels[current]}`;$('previous').disabled=current===0;$('next').disabled=current===16;try{sessionStorage.setItem('aqdi-production-panel',String(current));}catch{}}
 
 function browse(){clearTimers();if(stage.classList.contains('running'))finish();intro.hidden=true;viewer.hidden=false;showPanel(current);}
 function step(delta){if(viewer.hidden)return;const now=performance.now();if(now-lastStep<400)return;lastStep=now;showPanel(current+delta);}
@@ -20,14 +20,14 @@ viewer.addEventListener('wheel',e=>{if($('notes').open||document.querySelector('
 viewer.addEventListener('touchstart',e=>{startY=e.touches[0].clientY;},{passive:true});
 viewer.addEventListener('touchend',e=>{if(startY===null)return;const diff=startY-e.changedTouches[0].clientY;startY=null;if(Math.abs(diff)>45)step(diff>0?1:-1);},{passive:true});
 reduce.addEventListener('change',()=>{if(reduce.matches&&stage.classList.contains('running'))finish();});
-try{const saved=Number(sessionStorage.getItem('aqdi-production-panel'));if(Number.isInteger(saved)&&saved>=0&&saved<18)current=saved;}catch{}
+try{const saved=Number(sessionStorage.getItem('aqdi-production-panel'));if(Number.isInteger(saved)&&saved>=0&&saved<17)current=saved;}catch{}
 function fitStage(){if(intro.hidden)return;const controls=intro.querySelector('.intro-controls');const available=Math.max(120,intro.clientHeight-controls.offsetHeight-34);const width=Math.min(intro.clientWidth-24,available*2/3);stage.style.width=width+'px';stage.style.height=(width*1.5)+'px';}new ResizeObserver(fitStage).observe(intro);window.addEventListener('resize',fitStage);fitStage();
 })();
 
 /* Phase 2: artwork integration and dynamic content. No opening logic below. */
 (()=>{'use strict';
 const $=id=>document.getElementById(id),canvas=$('p2-canvas'),holder=document.querySelector('#viewer .panel-holder'),tools=$('p2-tools');
-const art={4:'slide04_quran_verse',5:'slide05_invitation',6:'slide06_our_journey',7:'slide07_wedding_details',9:'slide09_dress_code',10:'slide10_programme_1',11:'slide11_programme_2',12:'slide12_programme_3',13:'slide13_gallery_1',14:'slide14_gallery_2',15:'slide15_gallery_3',18:'slide18_thank_you'};
+const art={4:'slide04_quran_verse',5:'slide05_invitation',6:'slide06_our_journey',7:'slide07_wedding_details',9:'slide09_dress_code',10:'slide10_programme_1',11:'slide11_programme_2',12:'slide12_programme_3',13:'slide13_gallery_1',14:'slide14_gallery_2',17:'slide18_thank_you'};
 const cfg=window.AQDI_PHASE2_CONFIG;
 const programme={10:[
  ['4:30 PM – 5:30 PM','GUEST ARRIVAL & WELCOME RECEPTION',['Music • Refreshments • Mingling']],
@@ -63,7 +63,6 @@ function render(n){slide=n;clearInterval(ticker);ticker=null;canvas.replaceChild
  if(n===9){const palette=node('div','p2-palette');const im=node('img');im.alt='Approved dress-code colour palette';im.src='assets/dresscode/approved_palette.jpg';im.decoding='async';palette.append(im);palette.style.clipPath='polygon(4% 0,96% 0,100% 4%,100% 96%,96% 100%,4% 100%,0 96%,0 4%)';place(palette,[226,510,488,568]);}
  if(n===13){photo('assets/gallery/photo01.jpg',[159,342,363,481],'48% 30%',frameClip);photo('assets/gallery/photo02.jpg',[438,879,394,458],'50% 28%',frameClip);}
  if(n===14){photo('assets/gallery/photo03.jpg',[137,350,369,492],'50% 30%',frameClip);photo('assets/gallery/photo04.jpg',[410,896,394,455],'50% 25%',frameClip);}
- if(n===15){if(cfg.galleryPhoto05Available)photo('assets/gallery/photo05.jpg',[131,354,369,495],'50% 30%',frameClip);if(cfg.galleryPhoto06Available)photo('assets/gallery/photo06.jpg',[439,898,372,473],'50% 30%',frameClip);}
  if(n in programme)addTool('Read programme',readProgramme);
  requestAnimationFrame(fit);return true;
 }
