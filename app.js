@@ -3,10 +3,16 @@ const $=id=>document.getElementById(id),stage=$('stage'),intro=$('intro'),invita
 let timers=[];
 const reduce=matchMedia('(prefers-reduced-motion: reduce)');
 for(let i=0;i<3;i++){const bird=document.createElement('div');bird.className='bird';bird.innerHTML='<svg viewBox="0 0 100 70"><path class="wing back" fill="#e7e9e3" d="M49 42 Q33 9 9 5 Q14 27 43 48Z"/><path class="wing" fill="#fffef5" d="M46 44 Q57 5 83 2 Q85 18 68 37 L58 47Z"/><path fill="#fffff9" d="M27 46 L8 40 L23 55 Q45 61 68 43 Q83 48 87 40 Q89 33 83 31 Q76 29 71 36 L48 45Z"/><path fill="#d4b37a" d="M86 35 L97 39 L86 40Z"/><circle cx="83" cy="35" r="1.2" fill="#263831"/></svg>';$('birds').append(bird);}
+const music=$('invitation-music'),musicButton=$('music-toggle');
+music.volume=.5;
+function musicState(){const playing=!music.paused&&!music.muted;musicButton.textContent=playing?'♫':'♫̸';musicButton.setAttribute('aria-label',playing?'Mute music':'Play music');musicButton.setAttribute('aria-pressed',String(playing));}
+function startMusic(){musicButton.hidden=false;music.muted=false;const playback=music.play();if(playback&&playback.catch)playback.catch(musicState);musicState();}
+musicButton.onclick=()=>{if(music.paused||music.muted)startMusic();else{music.muted=true;musicState();}};
+['playing','pause','volumechange','error'].forEach(event=>music.addEventListener(event,musicState));
 function clearTimers(){timers.forEach(clearTimeout);timers=[];}
 function later(fn,ms){timers.push(setTimeout(fn,ms));}
 function finish(){clearTimers();stage.className='stage done';$('open').hidden=true;$('intro-status').textContent='Bismillah';later(begin,1500);}
-async function play(){clearTimers();$('open').hidden=true;$('intro-status').textContent='Preparing the opening';try{await Promise.all([...stage.querySelectorAll('img')].map(im=>im.decode()));}catch{ $('intro-status').textContent='An opening image could not load. Please tap to retry.';$('open').hidden=false;return;}clearTimers();stage.className='stage';$('open').hidden=true;if(reduce.matches){finish();return;}void stage.offsetWidth;stage.classList.add('running');$('intro-status').textContent='The wrapper opens';later(()=>$('intro-status').textContent='The mosque gates open',3400);later(()=>$('intro-status').textContent='Through the entrance into the illuminated interior',6600);later(finish,12000);}
+async function play(){startMusic();clearTimers();$('open').hidden=true;$('intro-status').textContent='Preparing the opening';try{await Promise.all([...stage.querySelectorAll('img')].map(im=>im.decode()));}catch{ $('intro-status').textContent='An opening image could not load. Please tap to retry.';$('open').hidden=false;return;}clearTimers();stage.className='stage';$('open').hidden=true;if(reduce.matches){finish();return;}void stage.offsetWidth;stage.classList.add('running');$('intro-status').textContent='The wrapper opens';later(()=>$('intro-status').textContent='The mosque gates open',3400);later(()=>$('intro-status').textContent='Through the entrance into the illuminated interior',6600);later(finish,12000);}
 
 function begin(){buildInvitation();intro.hidden=true;invitation.hidden=false;document.body.classList.add('invitation-open');invitation.scrollTop=0;}
 function buildInvitation(){if(invitation.dataset.ready)return;invitation.dataset.ready='true';

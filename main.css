@@ -84,3 +84,5 @@ body.invitation-open{overflow:hidden}#invitation{display:block;height:100dvh;ove
 .guest-content h1,.guest-content>p,.guest-content label{ text-shadow:0 1px 2px #fff9e8,0 0 7px #fff9e8; }
 .guest-content .pass-status{background:rgba(255,250,237,.12)}
 .guest-content input{background:rgba(255,250,239,.9)}
+
+.music-toggle{position:fixed;right:max(14px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top));z-index:30;width:42px;height:42px;padding:0;border:1px solid #ceb474aa;background:#12362ce6;color:#f4dc9d;box-shadow:0 3px 15px #0004;font:22px Georgia;display:grid;place-items:center}.music-toggle:focus-visible{outline:2px solid #f4dc9d;outline-offset:3px}
