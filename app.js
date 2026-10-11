@@ -37,7 +37,7 @@ const observer=new IntersectionObserver(entries=>entries.forEach(e=>{e.target.cl
 }
 function renderGuest(n){const guest=$('guest-content');guest.hidden=false;
 if(n===16){guest.innerHTML='<h1>RSVP</h1><p lang="ar" dir="rtl">تأكيد الحضور</p><p>Please enter your details to confirm your attendance.</p><form id="rsvp-form"><label>Full name<input name="name" autocomplete="name" maxlength="100" required></label><label>Mobile number<input name="mobile" type="tel" autocomplete="tel" maxlength="25" pattern="[+0-9 ()-]{7,25}" required></label><button type="submit">Submit RSVP & Open WhatsApp</button></form><p id="rsvp-status" role="status"></p><p>One invitation admits one guest. Entry pass is issued after coordinator approval.</p>';
-$('rsvp-form').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),name=String(f.get('name')).trim(),mobile=String(f.get('mobile')).trim();if(!name)return;try{localStorage.setItem('aqdi-rsvp',JSON.stringify({name,mobile}));}catch{}const msg='AQDI RSVP – Sevvri & Rahma\nName: '+name+'\nMobile: '+mobile+'\nI confirm my attendance on 23 October 2026. Please verify and approve my entry pass.';window.open('https://wa.me/'+window.AQDI_CONFIG.productionCoordinator+'?text='+encodeURIComponent(msg),'_blank','noopener');$('rsvp-status').textContent='Please send the message in WhatsApp to complete your RSVP.';};
+$('rsvp-form').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),name=String(f.get('name')).trim(),mobile=String(f.get('mobile')).trim();if(!name)return;try{localStorage.setItem('aqdi-rsvp',JSON.stringify({name,mobile}));}catch{}const msg='AQDI RSVP – Sevuri & Rahma\nName: '+name+'\nMobile: '+mobile+'\nI confirm my attendance on 23 October 2026. Please verify and approve my entry pass.';window.open('https://wa.me/'+window.AQDI_CONFIG.productionCoordinator+'?text='+encodeURIComponent(msg),'_blank','noopener');$('rsvp-status').textContent='Please send the message in WhatsApp to complete your RSVP.';};
 }else{guest.innerHTML='<h1>Security Pass</h1><p lang="ar" dir="rtl">بطاقة الدخول</p><div class="pass-status"><p>Pending coordinator approval</p><p>Your QR code and passcode will be issued by Kareem after verification.</p></div><p>One approved pass admits one guest.</p><a href="https://wa.me/'+window.AQDI_CONFIG.productionCoordinator+'" target="_blank" rel="noopener">Contact Kareem<br>+255 692 450 555</a>';}}
 $('open').onclick=play;
 reduce.addEventListener('change',()=>{if(reduce.matches&&stage.classList.contains('running'))finish();});
@@ -46,7 +46,7 @@ function fitStage(){if(intro.hidden)return;const available=Math.max(120,intro.cl
 
 (()=>{'use strict';
 const $=id=>document.getElementById(id);let canvas;
-const art={4:'slide04_quran_verse',5:'slide05_invitation',6:'slide06_our_journey',7:'slide07_wedding_details',9:'slide09_dress_code',10:'slide10_programme_1',11:'slide11_programme_2',12:'slide12_programme_3',13:'slide13_gallery_1',14:'slide14_gallery_2',15:'slide15_gallery_3',18:'slide18_thank_you'};
+const art={4:'slide04_quran_verse',5:'slide05_invitation_sevuri',6:'slide06_our_journey',7:'slide07_wedding_details',9:'slide09_dress_code',10:'slide10_programme_1',11:'slide11_programme_2',12:'slide12_programme_3',13:'slide13_gallery_1',14:'slide14_gallery_2',15:'slide15_gallery_3',18:'slide18_thank_you'};
 const cfg=window.AQDI_CONTENT_CONFIG;
 const programme={10:[
  ['4:30 PM – 5:30 PM','GUEST ARRIVAL & WELCOME RECEPTION',['Music • Refreshments • Mingling']],
@@ -54,7 +54,7 @@ const programme={10:[
  ['6:00 PM – 6:30 PM','MAGHRIB PRAYER BREAK',[]]
 ],11:[
  ['6:30 PM – 7:00 PM','AQDI CEREMONY',['AQDI Ceremony','Kusainiwa kwa nyaraka','Dua ya ndoa','Congratulations']],
- ['7:00 PM – 7:15 PM','FIRST GRAND EXIT',['Rahma & Sevvri make their first grand exit as husband and wife.']],
+ ['7:00 PM – 7:15 PM','FIRST GRAND EXIT',['Rahma & Sevuri make their first grand exit as husband and wife.']],
  ['7:15 PM – 8:45 PM','HURAIRAH CLASSICS – BAITUL HALAL',['1 HOUR 30 MINUTES']]
 ],12:[
  ['8:45 PM – 9:15 PM','DINNER & WEDDING TOASTS',[]],

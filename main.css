@@ -137,3 +137,8 @@ body.invitation-open{overflow:hidden}#invitation{display:block;height:100dvh;ove
 /* Expand only Quran Verse; subsequent invitation cards retain their sizing. */
 #invitation .invitation-slide[data-slide="4"]{padding-left:0;padding-right:0;padding-top:0;min-height:100svh}
 #invitation .invitation-slide[data-slide="4"] .slide-frame{width:min(100%,560px)}
+
+/* Fill viewport bands with the same wrapper motif; original moving artwork stays intact. */
+#intro{position:relative;overflow:hidden;isolation:isolate}
+#intro:before{content:'';position:absolute;inset:-24px;background:url('assets/optimized/wrapper.webp') center/cover no-repeat;filter:blur(12px) brightness(.78);z-index:-1;pointer-events:none}
+#intro .stage:not(.running):not(.done):not(.booting){background:url('assets/optimized/wrapper.webp') center/cover no-repeat}
