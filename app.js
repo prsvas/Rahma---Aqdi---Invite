@@ -41,7 +41,7 @@ $('rsvp-form').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),na
 }else{guest.innerHTML='<h1>Security Pass</h1><p lang="ar" dir="rtl">بطاقة الدخول</p><div class="pass-status"><p>Pending coordinator approval</p><p>Your QR code and passcode will be issued by Kareem after verification.</p></div><p>One approved pass admits one guest.</p><a href="https://wa.me/'+window.AQDI_CONFIG.productionCoordinator+'" target="_blank" rel="noopener">Contact Kareem<br>+255 692 450 555</a>';}}
 $('open').onclick=play;
 reduce.addEventListener('change',()=>{if(reduce.matches&&stage.classList.contains('running'))finish();});
-function fitStage(){if(intro.hidden)return;const controls=intro.querySelector('.intro-controls');const available=Math.max(120,intro.clientHeight-controls.offsetHeight-34);const width=Math.min(intro.clientWidth-24,available*2/3);stage.style.width=width+'px';stage.style.height=(width*1.5)+'px';}new ResizeObserver(fitStage).observe(intro);window.addEventListener('resize',fitStage);fitStage();
+function fitStage(){if(intro.hidden)return;const available=Math.max(120,intro.clientHeight);const width=Math.min(intro.clientWidth,available*2/3);stage.style.width=width+'px';stage.style.height=(width*1.5)+'px';}new ResizeObserver(fitStage).observe(intro);window.addEventListener('resize',fitStage);fitStage();
 })();
 
 (()=>{'use strict';
