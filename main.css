@@ -58,7 +58,7 @@ body.invitation-open{overflow:hidden}#invitation{display:block;height:100dvh;ove
 .invitation-slide[data-slide="17"] .guest-content{
  min-height: min(820px, calc(100vw * 1.65));
  padding:48px 28px 40px;
- background:linear-gradient(180deg,rgba(250,241,221,.82),rgba(250,241,221,.95) 28%,rgba(247,235,211,.95) 75%,rgba(240,222,184,.82)),url('assets/reconstructed/interior.png') center/cover;
+ background:linear-gradient(180deg,rgba(250,241,221,.82),rgba(250,241,221,.95) 28%,rgba(247,235,211,.95) 75%,rgba(240,222,184,.82)),url('assets/optimized/interior.webp') center/cover;
  border:2px solid #c5a361;
  outline:1px solid #dbc18d;
  outline-offset:-10px;
@@ -78,7 +78,7 @@ body.invitation-open{overflow:hidden}#invitation{display:block;height:100dvh;ove
 /* 88% transparent background layer; content remains fully opaque. */
 .invitation-slide[data-slide="16"] .guest-content,
 .invitation-slide[data-slide="17"] .guest-content{
- background:linear-gradient(rgba(250,241,221,.12),rgba(250,241,221,.12)),url('assets/reconstructed/interior.png') center/cover;
+ background:linear-gradient(rgba(250,241,221,.12),rgba(250,241,221,.12)),url('assets/optimized/interior.webp') center/cover;
  color:#17392e;
 }
 .guest-content h1,.guest-content>p,.guest-content label{ text-shadow:0 1px 2px #fff9e8,0 0 7px #fff9e8; }
@@ -95,3 +95,13 @@ body.invitation-open{overflow:hidden}#invitation{display:block;height:100dvh;ove
 .stage.booting .open-hit{pointer-events:none;visibility:hidden}
 .opening-loader{position:absolute;z-index:8;left:50%;top:50%;transform:translate(-50%,-50%);font-size:14px;white-space:nowrap;background:#15382ee6;color:#eed6a0;border:1px solid #c2a76b88;padding:12px 20px}
 .opening-loader:disabled{opacity:1;cursor:wait}
+
+/* Frame the complete wrapper itself rather than the taller cinematic stage. */
+.stage:not(.running):not(.done){background:transparent;box-shadow:none}
+.stage:not(.running):not(.done) .wrapper{box-shadow:0 16px 55px #0006,0 0 0 1px #d3b37666}
+#invitation{scroll-snap-type:none}
+.scroll-guide{touch-action:manipulation;pointer-events:auto;z-index:20}
+.slide-frame img.pending-image{opacity:0}
+.slide-frame img{transition:opacity .3s ease}
+.slide-canvas{background:radial-gradient(ellipse,#234a3b,#102e27)}
+.image-retry{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:8;white-space:nowrap;font-size:13px}
