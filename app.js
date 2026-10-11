@@ -52,7 +52,7 @@ $('rsvp-form').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),na
 }else{guest.innerHTML='<h1>Security Pass</h1><p lang="ar" dir="rtl">بطاقة الدخول</p><div class="pass-status"><p>Pending coordinator approval</p><p>Your QR code and passcode will be issued by Kareem after verification.</p></div><p>One approved pass admits one guest.</p><a href="https://wa.me/'+window.AQDI_CONFIG.productionCoordinator+'" target="_blank" rel="noopener">Contact Kareem<br>+255 692 450 555</a>';}}
 $('open').onclick=play;
 reduce.addEventListener('change',()=>{if(reduce.matches&&stage.classList.contains('running'))finish();});
-function fitStage(){if(intro.hidden)return;const w=intro.clientWidth,h=intro.clientHeight;const scale=Math.min(w/1083,h/1452);stage.style.setProperty('--wrapper-width',(1083*scale)+'px');stage.style.setProperty('--wrapper-height',(1452*scale)+'px');const sceneWidth=Math.max(w,h*2/3);stage.style.setProperty('--scene-width',sceneWidth+'px');stage.style.setProperty('--scene-height',(sceneWidth*1.5)+'px');}new ResizeObserver(fitStage).observe(intro);window.addEventListener('resize',fitStage);fitStage();
+function fitStage(){if(intro.hidden)return;const w=intro.clientWidth,h=intro.clientHeight;const sceneWidth=Math.min(w,h*2/3);const sceneHeight=sceneWidth*1.5;stage.style.setProperty('--scene-width',sceneWidth+'px');stage.style.setProperty('--scene-height',sceneHeight+'px');stage.style.setProperty('--wrapper-width',sceneWidth+'px');stage.style.setProperty('--wrapper-height',(sceneWidth*1452/1083)+'px');}new ResizeObserver(fitStage).observe(intro);window.addEventListener('resize',fitStage);fitStage();
 })();
 
 (()=>{'use strict';
