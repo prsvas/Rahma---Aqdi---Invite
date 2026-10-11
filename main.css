@@ -138,7 +138,7 @@ body.invitation-open{overflow:hidden}#invitation{display:block;height:100dvh;ove
 #invitation .invitation-slide[data-slide="4"]{padding-left:0;padding-right:0;padding-top:0;min-height:100svh}
 #invitation .invitation-slide[data-slide="4"] .slide-frame{width:min(100%,560px)}
 
-/* One viewport per card. Wrapper is centre-cropped only, as approved. */
+/* One viewport per card. Wrapper fits proportionally without cropping. */
 #intro{position:relative;overflow:hidden;isolation:isolate;background:#102e27}
 #intro .stage{width:100%!important;height:100%!important;max-width:none;aspect-ratio:auto;overflow:hidden;box-shadow:none;background:#102e27}
 #intro .wrapper{width:var(--wrapper-width);height:var(--wrapper-height);inset:0;left:50%;right:auto;top:50%;bottom:auto;margin:0;transform:translate(-50%,-50%);box-shadow:none}
@@ -147,3 +147,6 @@ body.invitation-open{overflow:hidden}#invitation{display:block;height:100dvh;ove
 #invitation .invitation-slide .slide-frame{width:min(100%,560px);box-shadow:none}
 #invitation .invitation-slide[data-slide="4"]{min-height:100dvh;padding:0}
 #invitation .guest-content{min-height:100dvh}
+
+/* Keep connection feedback readable without changing artwork. */
+.image-retry{max-width:90%;white-space:normal;text-align:center;background:#15382ef2;color:#fff1d5;line-height:1.5}.image-retry:disabled{opacity:1;cursor:wait}
