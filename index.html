@@ -2,15 +2,15 @@
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#102e27"><title>Sevvri & Rahma · AQDI Invitation</title><link rel="stylesheet" href="main.css"></head>
 <body>
-<header class="toolbar"><div><strong>AQDI</strong><small>Sevvri T. Msangi & Rahma Riyadh Kisuo</small></div><button id="info" aria-label="Invitation notes">Notes</button></header>
+
 <main>
-<section id="intro" aria-label="Opening motion preview">
+<section id="intro" aria-label="Invitation opening">
 <svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
 <clipPath id="leftDoor" clipPathUnits="objectBoundingBox"><path d="M.15 .926 L.15 .389 C.15 .259 .308 .148 .492 .128 L.492 .926Z"/></clipPath>
 <clipPath id="rightDoor" clipPathUnits="objectBoundingBox"><path d="M.492 .128 C.687 .143 .839 .258 .839 .389 L.839 .926 L.492 .926Z"/></clipPath>
 <clipPath id="facade" clipPathUnits="objectBoundingBox"><path clip-rule="evenodd" d="M0 0H1V1H0Z M.15 .926V.389C.15 .259 .308 .148 .492 .128C.687 .143 .839 .258 .839 .389V.926Z"/></clipPath>
 </defs></svg><div class="stage" id="stage">
-<div class="reveal"><img src="assets/reconstructed/bismillah.png" alt="Approved Bismillah storyboard panel"></div>
+<div class="reveal"><img src="assets/reconstructed/bismillah.png" alt="Bismillah"></div>
 <div class="entrance" aria-hidden="true">
 <div class="interior-scene"><img class="interior-far" src="assets/reconstructed/interior.png" alt=""><img class="interior-near near-left" src="assets/reconstructed/interior.png" alt=""><img class="interior-near near-right" src="assets/reconstructed/interior.png" alt=""></div>
 <div class="mosque"><img class="gate-frame" src="assets/reconstructed/gates.png" alt=""><img class="gate gate-left" src="assets/reconstructed/gates.png" alt=""><img class="gate gate-right" src="assets/reconstructed/gates.png" alt=""></div></div>
@@ -18,11 +18,10 @@
 <div class="birds" id="birds" aria-hidden="true"></div><div class="glow" aria-hidden="true"></div>
 <button class="open-hit" id="open" aria-label="Open invitation"></button>
 </div>
-<div class="intro-controls"><p id="intro-status" role="status">Tap the wrapper to open</p><div><button id="skip">Skip intro</button><button id="replay">Replay intro</button><button id="browse">View slides</button><button id="venue">Venue</button></div></div>
+<div class="intro-controls"><p id="intro-status" role="status">Tap the wrapper to open</p></div>
 </section>
-<section id="viewer" hidden aria-label="Extracted storyboard review"><div class="panel-holder"><img id="panel" src="assets/reconstructed/wrapper.png" alt=""><div id="p2-canvas" hidden></div></div><div id="p2-tools" hidden></div><a id="maps-link" hidden target="_blank" rel="noopener">Open Serena Hotel in Google Maps</a><nav class="viewer-controls" aria-label="Panel navigation"><button id="previous" aria-label="Previous panel">↑</button><span id="counter" aria-live="polite"></span><button id="next" aria-label="Next panel">↓</button><button id="intro-back">Intro</button></nav></section>
+<section id="invitation" hidden aria-label="Wedding invitation"><div class="panel-holder"><img id="panel" alt=""><div id="p2-canvas" hidden></div><section id="guest-content" hidden></section></div><div id="p2-tools" hidden></div><a id="maps-link" hidden target="_blank" rel="noopener">Open Serena Hotel in Google Maps</a><nav class="guest-navigation" aria-label="Invitation navigation"><button id="previous" aria-label="Previous slide">‹</button><span id="counter" aria-live="polite"></span><button id="next" aria-label="Next slide">›</button></nav></section>
 </main>
-<dialog id="notes"><h1>AQDI invitation</h1><p>Swipe up or down, or use the arrows, to view all seventeen invitation slides.</p><p>Tap a photograph to see it in full. On programme slides, choose Read programme for larger text.</p><p>The countdown is set to 23 October 2026 at 4:30 PM, Dar es Salaam time.</p><form method="dialog"><button>Close</button></form></dialog>
 <dialog id="p2-reader" aria-labelledby="p2-reader-title"><h1 id="p2-reader-title"></h1><div id="p2-reader-body"></div><form method="dialog"><button>Close</button></form></dialog>
 <dialog id="p2-photo-view" aria-label="Full photograph"><img id="p2-full-photo" alt=""><form method="dialog"><button>Close</button></form></dialog>
 <script src="config.js"></script><script src="app.js"></script>
