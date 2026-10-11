@@ -9,10 +9,12 @@ function musicState(){const playing=!music.paused&&!music.muted;musicButton.text
 function startMusic(){musicButton.hidden=false;music.muted=false;const playback=music.play();if(playback&&playback.catch)playback.catch(musicState);musicState();}
 musicButton.onclick=()=>{if(music.paused||music.muted)startMusic();else{music.muted=true;musicState();}};
 ['playing','pause','volumechange','error'].forEach(event=>music.addEventListener(event,musicState));
+let quranWarmup;
+function warmQuran(){if(quranWarmup)return;const image=new Image();image.src='assets/reconstructed/slide04_quran_verse.png';image.decoding='async';quranWarmup=image; if(image.decode)image.decode().catch(()=>{});}
 function clearTimers(){timers.forEach(clearTimeout);timers=[];}
 function later(fn,ms){timers.push(setTimeout(fn,ms));}
 function finish(){clearTimers();stage.className='stage done';$('open').hidden=true;$('intro-status').textContent='Bismillah';later(begin,1500);}
-async function play(){startMusic();clearTimers();$('open').hidden=true;$('intro-status').textContent='Preparing the opening';try{await Promise.all([...stage.querySelectorAll('img')].map(im=>im.decode()));}catch{ $('intro-status').textContent='An opening image could not load. Please tap to retry.';$('open').hidden=false;return;}clearTimers();stage.className='stage';$('open').hidden=true;if(reduce.matches){finish();return;}void stage.offsetWidth;stage.classList.add('running');$('intro-status').textContent='The wrapper opens';later(()=>$('intro-status').textContent='The mosque gates open',3400);later(()=>$('intro-status').textContent='Through the entrance into the illuminated interior',6600);later(finish,12000);}
+async function play(){startMusic();warmQuran();clearTimers();$('open').hidden=true;$('intro-status').textContent='Preparing the opening';try{await Promise.all([...stage.querySelectorAll('img')].map(im=>im.decode()));}catch{ $('intro-status').textContent='An opening image could not load. Please tap to retry.';$('open').hidden=false;return;}clearTimers();stage.className='stage';$('open').hidden=true;if(reduce.matches){finish();return;}void stage.offsetWidth;stage.classList.add('running');$('intro-status').textContent='The wrapper opens';later(()=>$('intro-status').textContent='The mosque gates open',3400);later(()=>$('intro-status').textContent='Through the entrance into the illuminated interior',6600);later(finish,12000);}
 
 function begin(){buildInvitation();intro.hidden=true;invitation.hidden=false;document.body.classList.add('invitation-open');invitation.scrollTop=0;}
 function buildInvitation(){if(invitation.dataset.ready)return;invitation.dataset.ready='true';
@@ -25,6 +27,7 @@ if(n===8){canvas.hidden=true;const image=document.createElement('img');image.cla
 if(n===16||n===17){canvas.hidden=true;const guest=document.createElement('section');guest.className='guest-content';guest.id='guest-content';frame.append(guest);renderGuest(n);guest.removeAttribute('id');}
 if(n>=10&&n<=12){const button=document.createElement('button');button.className='programme-read';button.type='button';button.textContent='Read programme';button.onclick=()=>window.AQDI_CONTENT.readProgramme(n);frame.append(button);}
 const scale=()=>canvas.style.setProperty('--p2-scale',frame.clientWidth/941);new ResizeObserver(scale).observe(frame);scale();}
+invitation.querySelectorAll('.invitation-slide').forEach((section,i,all)=>{if(i===all.length-1)return;const arrow=document.createElement('button');arrow.type='button';arrow.className='scroll-guide';arrow.setAttribute('aria-label','Scroll down to the next invitation card');arrow.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15m-6-6 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';arrow.onclick=()=>all[i+1].scrollIntoView({behavior:reduce.matches?'auto':'smooth',block:'start'});section.append(arrow);});
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>e.target.classList.toggle('in-view',e.isIntersecting)),{threshold:.12});invitation.querySelectorAll('.invitation-slide').forEach(el=>observer.observe(el));
 }
 function renderGuest(n){const guest=$('guest-content');guest.hidden=false;
