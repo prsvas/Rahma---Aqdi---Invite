@@ -74,3 +74,13 @@ body.invitation-open{overflow:hidden}#invitation{display:block;height:100dvh;ove
 .guest-content .pass-status:before{content:'✦';display:block;font-size:30px;color:#b48e45;margin-bottom:15px}
 .guest-content a{display:inline-block;border:1px solid #b49351;border-radius:22px;background:#fff7e6bb;padding:10px 24px;text-decoration:none}
 @media(max-width:380px){.invitation-slide[data-slide="16"] .guest-content,.invitation-slide[data-slide="17"] .guest-content{padding:38px 22px 30px}}
+
+/* 88% transparent background layer; content remains fully opaque. */
+.invitation-slide[data-slide="16"] .guest-content,
+.invitation-slide[data-slide="17"] .guest-content{
+ background:linear-gradient(rgba(250,241,221,.12),rgba(250,241,221,.12)),url('assets/reconstructed/interior.png') center/cover;
+ color:#17392e;
+}
+.guest-content h1,.guest-content>p,.guest-content label{ text-shadow:0 1px 2px #fff9e8,0 0 7px #fff9e8; }
+.guest-content .pass-status{background:rgba(255,250,237,.12)}
+.guest-content input{background:rgba(255,250,239,.9)}
