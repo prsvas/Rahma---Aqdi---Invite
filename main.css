@@ -88,3 +88,10 @@ body.invitation-open{overflow:hidden}#invitation{display:block;height:100dvh;ove
 .music-toggle{position:fixed;right:max(14px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top));z-index:30;width:42px;height:42px;padding:0;border:1px solid #ceb474aa;background:#12362ce6;color:#f4dc9d;box-shadow:0 3px 15px #0004;font:22px Georgia;display:grid;place-items:center}.music-toggle:focus-visible{outline:2px solid #f4dc9d;outline-offset:3px}
 
 #invitation .invitation-slide{padding-bottom:76px}.scroll-guide{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:38px;height:38px;border:1px solid #d5b66fbb;border-radius:50%;background:#143a2ed9;color:#f1d794;padding:8px;z-index:12;box-shadow:0 0 14px #d5b66f20;animation:scrollGuidePulse 2.8s ease-in-out infinite}.scroll-guide svg{display:block;width:100%;height:100%}@keyframes scrollGuidePulse{0%,100%{transform:translateX(-50%) translateY(0);opacity:.75}50%{transform:translateX(-50%) translateY(4px);opacity:1}}@media(prefers-reduced-motion:reduce){.scroll-guide{animation:none}}
+
+/* Suppress future scenes before playback without resizing the approved stage. */
+.stage:not(.running):not(.done) .entrance{visibility:hidden}
+.stage.booting .wrapper{visibility:hidden}
+.stage.booting .open-hit{pointer-events:none;visibility:hidden}
+.opening-loader{position:absolute;z-index:8;left:50%;top:50%;transform:translate(-50%,-50%);font-size:14px;white-space:nowrap;background:#15382ee6;color:#eed6a0;border:1px solid #c2a76b88;padding:12px 20px}
+.opening-loader:disabled{opacity:1;cursor:wait}

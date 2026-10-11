@@ -11,6 +11,9 @@ musicButton.onclick=()=>{if(music.paused||music.muted)startMusic();else{music.mu
 ['playing','pause','volumechange','error'].forEach(event=>music.addEventListener(event,musicState));
 let quranWarmup;
 function warmQuran(){if(quranWarmup)return;const image=new Image();image.src='assets/reconstructed/slide04_quran_verse.png';image.decoding='async';quranWarmup=image; if(image.decode)image.decode().catch(()=>{});}
+const loader=$('opening-loader');
+async function prepareWrapper(){stage.classList.add('booting');$('open').disabled=true;loader.hidden=false;loader.disabled=true;loader.textContent='Loading invitation…';try{await Promise.all([...stage.querySelectorAll('.wrapper img')].map(image=>image.decode()));stage.classList.remove('booting');$('open').disabled=false;loader.hidden=true;}catch{loader.disabled=false;loader.textContent='Tap to retry loading';}}
+loader.onclick=prepareWrapper;prepareWrapper();
 function clearTimers(){timers.forEach(clearTimeout);timers=[];}
 function later(fn,ms){timers.push(setTimeout(fn,ms));}
 function finish(){clearTimers();stage.className='stage done';$('open').hidden=true;$('intro-status').textContent='Bismillah';later(begin,1500);}
