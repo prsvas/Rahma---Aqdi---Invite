@@ -150,3 +150,9 @@ body.invitation-open{overflow:hidden}#invitation{display:block;height:100dvh;ove
 
 /* Keep connection feedback readable without changing artwork. */
 .image-retry{max-width:90%;white-space:normal;text-align:center;background:#15382ef2;color:#fff1d5;line-height:1.5}.image-retry:disabled{opacity:1;cursor:wait}
+
+/* Conceal the mosque strips until the wrapper has completely opened.
+   This mask does not resize artwork or alter any animation. */
+#intro .stage.running:not(.wrapper-open) .entrance{
+ clip-path:inset(calc((var(--scene-height) - var(--wrapper-height)) / 2) 0);
+}
