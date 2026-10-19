@@ -1,8 +1,8 @@
 /* Static production invitation configuration. */
 window.AQDI_CONFIG=Object.freeze({
  event:'AQDI-2026',
- coordinatorName:'Kareem',
- productionCoordinator:'255692450555',
+ coordinatorName:'Srinivas',
+ productionCoordinator:'255697154111',
  publicInvitationUrl:'https://prsvas.github.io/Rahma---Aqdi---Invite/',
  productionEnabled:true,
  backendUrl:'https://script.google.com/macros/s/AKfycbzPT-SZQnnMKzohW9vsivv0Goa42zXi2MzrjOEvTulEfnT9apYJ_ajTFNWrJRkwY0gK3g/exec'

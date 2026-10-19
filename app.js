@@ -48,35 +48,24 @@ const observer=new IntersectionObserver(entries=>entries.forEach(e=>{e.target.cl
 }
 function renderGuest(n){const guest=$('guest-content');guest.hidden=false;
 if(n===16){guest.innerHTML='<h1>RSVP</h1><p lang="ar" dir="rtl">تأكيد الحضور</p><p>Please enter your details to confirm your attendance.</p><form id="rsvp-form"><label>Full name<input name="name" autocomplete="name" maxlength="100" required></label><label>Mobile number<input name="mobile" type="tel" autocomplete="tel" maxlength="25" pattern="[+0-9 ()-]{7,25}" required></label><button type="submit">Submit RSVP & Open WhatsApp</button></form><p id="rsvp-status" role="status"></p><p>One invitation admits one guest. Entry pass is issued after coordinator approval.</p>';
-$('rsvp-form').onsubmit=async e=>{
+$('rsvp-form').onsubmit=e=>{
  e.preventDefault();
  const f=new FormData(e.target);
  const name=String(f.get('name')||'').trim(),mobile=String(f.get('mobile')||'').trim();
  const coordinator=String(window.AQDI_CONFIG.productionCoordinator||'').replace(/\D/g,'');
+  const coordinatorName=String(window.AQDI_CONFIG.coordinatorName||'Coordinator').trim();
  if(!name||!mobile)return;
- if(!/^255\d{9}$/.test(coordinator)){$('rsvp-status').textContent='RSVP is temporarily unavailable. Please contact Kareem directly.';return;}
+ if(!/^255\d{9}$/.test(coordinator)){$('rsvp-status').textContent='RSVP is temporarily unavailable. Please contact '+coordinatorName+' directly.';return;}
  try{localStorage.setItem('aqdi-rsvp',JSON.stringify({name,mobile}));}catch{}
- const msg='AQDI RSVP – Sevuri & Rahma\nName: '+name+'\nMobile: '+mobile+'\n\nI confirm my attendance on 23 October 2026. Kareem, please verify my RSVP and arrange my entry pass after approval.';
- // Register before leaving the invitation. Immediate navigation previously interrupted this request on mobile.
- // Google Apps Script's cross-origin response is opaque: a completed request does not prove a saved row.
- const endpoint=String(window.AQDI_CONFIG.backendUrl||'').trim();
- if(!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(endpoint)){
-   $('rsvp-status').textContent='RSVP registration is not configured. Please contact Kareem.';return;
- }
- const payload=new URLSearchParams({action:'rsvpSubmit',eventId:'AQDI-2026',guestName:name,mobile:mobile,invitedBy:'AQDI Invitation',notes:'WhatsApp RSVP submitted'});
- const button=e.target.querySelector('button[type="submit"]');
- button.disabled=true;
- $('rsvp-status').textContent='Registering your RSVP… please wait.';
- try{
-   // Use form-encoded simple POST. Wait for request completion before opening WhatsApp.
-   await fetch(endpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:payload.toString(),redirect:'follow'});
-   $('rsvp-status').textContent='RSVP request sent. Please send the WhatsApp confirmation to Kareem.';
-   window.location.assign('https://wa.me/'+coordinator+'?text='+encodeURIComponent(msg));
- }catch(err){
-   $('rsvp-status').textContent='Could not contact the RSVP register. Check your connection and retry; WhatsApp has not opened.';
-   button.disabled=false;
- }
-
+ const msg='AQDI RSVP – Sevuri & Rahma\nName: '+name+'\nMobile: '+mobile+'\n\nI confirm my attendance on 23 October 2026. '+coordinatorName+', please verify my RSVP and arrange my entry pass after approval.';
+ // Same two-channel flow as Singo: register RSVP in Apps Script, then notify coordinator by WhatsApp.
+ // The coordinator's private dashboard URL must never be embedded in a guest-visible message.
+ const endpoint='https://script.google.com/macros/s/AKfycbzPT-SZQnnMKzohW9vsivv0Goa42zXi2MzrjOEvTulEfnT9apYJ_ajTFNWrJRkwY0gK3g/exec';
+ const payload=new URLSearchParams({action:'rsvpSubmit',eventId:'AQDI-2026',guestName:name,mobile:mobile,invitedBy:'AQDI Invitation',notes:'WhatsApp confirmation initiated'});
+ $('rsvp-status').textContent='Opening WhatsApp. Please send the message; '+coordinatorName+' will verify your RSVP.';
+ // Initiate the POST before navigation; no-cors responses are opaque, so the sheet must be checked.
+ try{fetch(endpoint,{method:'POST',mode:'no-cors',body:payload,keepalive:true}).catch(()=>{});}catch(err){}
+ window.location.href='https://wa.me/'+coordinator+'?text='+encodeURIComponent(msg);
 };
 }else{
  const params=new URLSearchParams(window.location.search);
@@ -85,7 +74,7 @@ $('rsvp-form').onsubmit=async e=>{
  const passCode=(params.get('pass')||'').trim();
  const qrToken=(params.get('qr')||'').trim();
  const event=(params.get('event')||'').trim();
- guest.innerHTML='<h1>Security Pass</h1><p lang="ar" dir="rtl">بطاقة الدخول</p><div class="pass-status" id="aqdi-pass-status"></div><p>One approved pass admits one guest. The gate team must verify the pass against the official guest register.</p><a href="https://wa.me/'+window.AQDI_CONFIG.productionCoordinator+'" target="_blank" rel="noopener">Contact Kareem<br>+255 692 450 555</a>';
+ guest.innerHTML='<h1>Security Pass</h1><p lang="ar" dir="rtl">بطاقة الدخول</p><div class="pass-status" id="aqdi-pass-status"></div><p>One approved pass admits one guest. The gate team must verify the pass against the official guest register.</p><a href="https://wa.me/'+window.AQDI_CONFIG.productionCoordinator+'" target="_blank" rel="noopener">Contact '+String(window.AQDI_CONFIG.coordinatorName||'Coordinator')+'<br>+255 697 154 111</a>';
  const status=guest.querySelector('#aqdi-pass-status');
  if(guestName && guestId && passCode && qrToken && event==='AQDI-2026'){
    const heading=document.createElement('p');heading.textContent='Personal invitation details';status.append(heading);
