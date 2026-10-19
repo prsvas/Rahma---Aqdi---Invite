@@ -44,4 +44,26 @@
 <audio id="invitation-music" src="assets/audio/alf-mabruk.mp3" preload="none" loop></audio>
 <button id="music-toggle" class="music-toggle" type="button" hidden aria-label="Play music" aria-pressed="false">♫</button>
 <script src="image-loader.js?v=20261011b"></script><script src="config.js?v=20261019-rsvp-fix"></script><script src="app.js?v=20261019-singo-workflow-v6"></script>
+
+<!-- Page numbers occupy their own space below each card. -->
+<style>
+#invitation .invitation-slide{flex-direction:column;padding-bottom:60px}
+.aqdi-page-number{display:block;flex:none;margin:0;padding:9px 0 5px;text-align:center;color:#dbc290;font:12px/18px Georgia,serif;letter-spacing:2px;pointer-events:none;position:relative;z-index:11}
+#intro>.aqdi-page-number{position:absolute;bottom:max(6px,env(safe-area-inset-bottom));left:0;width:100%}
+#intro .stage{transform:scale(.94)}
+</style>
+<script>
+(()=>{
+ const total=16;
+ function label(number){const el=document.createElement('span');el.className='aqdi-page-number';el.textContent=String(number).padStart(2,'0')+' / '+total;el.setAttribute('aria-label','Page '+number+' of '+total);return el;}
+ const intro=document.getElementById('intro');
+ intro.append(label(1));
+ const invitation=document.getElementById('invitation');
+ function numberCards(){invitation.querySelectorAll('.invitation-slide').forEach((section,i)=>{if(!section.querySelector(':scope > .aqdi-page-number'))section.append(label(i+2));});}
+ new MutationObserver(numberCards).observe(invitation,{childList:true});
+ numberCards();
+})();
+</script>
+
 </body></html>
+
