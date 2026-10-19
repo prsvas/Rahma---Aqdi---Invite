@@ -2,7 +2,7 @@
 window.AQDI_CONFIG=Object.freeze({
  event:'AQDI-2026',
  coordinatorName:'Kareem',
- productionCoordinator:'255697154111',
+ productionCoordinator:'255692450555',
  publicInvitationUrl:'https://prsvas.github.io/Rahma---Aqdi---Invite/',
  productionEnabled:true,
  backendUrl:null
