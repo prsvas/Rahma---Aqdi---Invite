@@ -1,5 +1,12 @@
 /* Static production invitation configuration. */
-window.AQDI_CONFIG=Object.freeze({event:'AQDI-2026',productionCoordinator:'255692450555',productionEnabled:true,backendUrl:null});
+window.AQDI_CONFIG=Object.freeze({
+ event:'AQDI-2026',
+ coordinatorName:'Kareem',
+ productionCoordinator:'255692450555',
+ publicInvitationUrl:'https://prsvas.github.io/Rahma---Aqdi---Invite/',
+ productionEnabled:true,
+ backendUrl:null
+});
 
 window.AQDI_VENUE_URL="https://www.google.com/maps/search/?api=1&query=Dar%20es%20Salaam%20Serena%20Hotel&query_place_id=ChIJiSFeEA1LXBgR1JMvxKg5THs";
 
