@@ -48,7 +48,24 @@ const observer=new IntersectionObserver(entries=>entries.forEach(e=>{e.target.cl
 }
 function renderGuest(n){const guest=$('guest-content');guest.hidden=false;
 if(n===16){guest.innerHTML='<h1>RSVP</h1><p lang="ar" dir="rtl">تأكيد الحضور</p><p>Please enter your details to confirm your attendance.</p><form id="rsvp-form"><label>Full name<input name="name" autocomplete="name" maxlength="100" required></label><label>Mobile number<input name="mobile" type="tel" autocomplete="tel" maxlength="25" pattern="[+0-9 ()-]{7,25}" required></label><button type="submit">Submit RSVP & Open WhatsApp</button></form><p id="rsvp-status" role="status"></p><p>One invitation admits one guest. Entry pass is issued after coordinator approval.</p>';
-$('rsvp-form').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),name=String(f.get('name')).trim(),mobile=String(f.get('mobile')).trim(),coordinator=String(window.AQDI_CONFIG.productionCoordinator||'').replace(/\D/g,'');if(!name||!mobile)return;if(!/^255\d{9}$/.test(coordinator)){$('rsvp-status').textContent='RSVP is temporarily unavailable. Please contact Kareem directly.';return;}try{localStorage.setItem('aqdi-rsvp',JSON.stringify({name,mobile}));}catch{}const approvalUrl='https://script.google.com/macros/s/AKfycbzPT-SZQnnMKzohW9vsivv0Goa42zXi2MzrjOEvTulEfnT9apYJ_ajTFNWrJRkwY0gK3g/exec';const msg='AQDI RSVP – Sevuri & Rahma\nName: '+name+'\nMobile: '+mobile+'\n\nOPEN APPROVAL DASHBOARD (PIN required):\n'+approvalUrl+'\n\nI confirm my attendance on 23 October 2026. Please verify and approve my entry pass.\n[RSVP LINK FIX v4]';$('rsvp-status').textContent='Opening WhatsApp… Please tap Send to complete your RSVP.';window.location.href='https://wa.me/'+coordinator+'?text='+encodeURIComponent(msg);};
+$('rsvp-form').onsubmit=e=>{
+ e.preventDefault();
+ const f=new FormData(e.target);
+ const name=String(f.get('name')||'').trim(),mobile=String(f.get('mobile')||'').trim();
+ const coordinator=String(window.AQDI_CONFIG.productionCoordinator||'').replace(/\D/g,'');
+ if(!name||!mobile)return;
+ if(!/^255\d{9}$/.test(coordinator)){$('rsvp-status').textContent='RSVP is temporarily unavailable. Please contact Kareem directly.';return;}
+ try{localStorage.setItem('aqdi-rsvp',JSON.stringify({name,mobile}));}catch{}
+ const msg='AQDI RSVP – Sevuri & Rahma\nName: '+name+'\nMobile: '+mobile+'\n\nI confirm my attendance on 23 October 2026. Kareem, please verify my RSVP and arrange my entry pass after approval.';
+ // Same two-channel flow as Singo: register RSVP in Apps Script, then notify coordinator by WhatsApp.
+ // The coordinator's private dashboard URL must never be embedded in a guest-visible message.
+ const endpoint='https://script.google.com/macros/s/AKfycbzPT-SZQnnMKzohW9vsivv0Goa42zXi2MzrjOEvTulEfnT9apYJ_ajTFNWrJRkwY0gK3g/exec';
+ const payload=new URLSearchParams({action:'rsvpSubmit',eventId:'AQDI-2026',guestName:name,mobile:mobile,invitedBy:'AQDI Invitation',notes:'WhatsApp confirmation initiated'});
+ $('rsvp-status').textContent='Opening WhatsApp. Please send the message; Kareem will verify your RSVP.';
+ // Initiate the POST before navigation; no-cors responses are opaque, so the sheet must be checked.
+ try{fetch(endpoint,{method:'POST',mode:'no-cors',body:payload,keepalive:true}).catch(()=>{});}catch(err){}
+ window.location.href='https://wa.me/'+coordinator+'?text='+encodeURIComponent(msg);
+};
 }else{
  const params=new URLSearchParams(window.location.search);
  const guestName=(params.get('guest')||'').trim();
