@@ -49,7 +49,23 @@ const observer=new IntersectionObserver(entries=>entries.forEach(e=>{e.target.cl
 function renderGuest(n){const guest=$('guest-content');guest.hidden=false;
 if(n===16){guest.innerHTML='<h1>RSVP</h1><p lang="ar" dir="rtl">تأكيد الحضور</p><p>Please enter your details to confirm your attendance.</p><form id="rsvp-form"><label>Full name<input name="name" autocomplete="name" maxlength="100" required></label><label>Mobile number<input name="mobile" type="tel" autocomplete="tel" maxlength="25" pattern="[+0-9 ()-]{7,25}" required></label><button type="submit">Submit RSVP & Open WhatsApp</button></form><p id="rsvp-status" role="status"></p><p>One invitation admits one guest. Entry pass is issued after coordinator approval.</p>';
 $('rsvp-form').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),name=String(f.get('name')).trim(),mobile=String(f.get('mobile')).trim(),coordinator=String(window.AQDI_CONFIG.productionCoordinator||'').replace(/\D/g,'');if(!name||!mobile)return;if(!/^255\d{9}$/.test(coordinator)){$('rsvp-status').textContent='RSVP is temporarily unavailable. Please contact Kareem directly.';return;}try{localStorage.setItem('aqdi-rsvp',JSON.stringify({name,mobile}));}catch{}const msg='AQDI RSVP – Sevuri & Rahma\nName: '+name+'\nMobile: '+mobile+'\nI confirm my attendance on 23 October 2026. Please verify and approve my entry pass.';$('rsvp-status').textContent='Opening WhatsApp… Please tap Send to complete your RSVP.';window.location.href='https://wa.me/'+coordinator+'?text='+encodeURIComponent(msg);};
-}else{guest.innerHTML='<h1>Security Pass</h1><p lang="ar" dir="rtl">بطاقة الدخول</p><div class="pass-status"><p>Pending coordinator approval</p><p>Your QR code and passcode will be issued by Kareem after verification.</p></div><p>One approved pass admits one guest.</p><a href="https://wa.me/'+window.AQDI_CONFIG.productionCoordinator+'" target="_blank" rel="noopener">Contact Kareem<br>+255 692 450 555</a>';}}
+}else{
+ const params=new URLSearchParams(window.location.search);
+ const guestName=(params.get('guest')||'').trim();
+ const guestId=(params.get('gid')||'').trim();
+ const passCode=(params.get('pass')||'').trim();
+ const qrToken=(params.get('qr')||'').trim();
+ const event=(params.get('event')||'').trim();
+ guest.innerHTML='<h1>Security Pass</h1><p lang="ar" dir="rtl">بطاقة الدخول</p><div class="pass-status" id="aqdi-pass-status"></div><p>One approved pass admits one guest. The gate team must verify the pass against the official guest register.</p><a href="https://wa.me/'+window.AQDI_CONFIG.productionCoordinator+'" target="_blank" rel="noopener">Contact Kareem<br>+255 692 450 555</a>';
+ const status=guest.querySelector('#aqdi-pass-status');
+ if(guestName && guestId && passCode && qrToken && event==='AQDI-2026'){
+   const heading=document.createElement('p');heading.textContent='Personal invitation details';status.append(heading);
+   [['Guest',guestName],['Guest ID',guestId],['Pass Code',passCode],['QR Token',qrToken]].forEach(([label,value])=>{const line=document.createElement('p');const b=document.createElement('strong');b.textContent=label+': ';line.append(b,document.createTextNode(value));status.append(line);});
+   const note=document.createElement('p');note.textContent='Present these details at the entrance. This page is not independent proof of approval; the gate team must verify the active QR token in the official dashboard.';status.append(note);
+ }else{
+   status.innerHTML='<p>Pending coordinator approval</p><p>Your personal pass link and Pass Code will be sent by Kareem after verification.</p>';
+ }
+ }}
 // Reveal the full mosque only when the original wrapper animation completes.
 stage.addEventListener('animationend',event=>{if(event.animationName==='paperLeft'&&stage.classList.contains('running'))stage.classList.add('wrapper-open');});
 $('open').onclick=play;
