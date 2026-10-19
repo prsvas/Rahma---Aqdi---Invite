@@ -56,7 +56,7 @@ $('rsvp-form').onsubmit=e=>{
  if(!name||!mobile)return;
  if(!/^255\d{9}$/.test(coordinator)){$('rsvp-status').textContent='RSVP is temporarily unavailable. Please contact Kareem directly.';return;}
  try{localStorage.setItem('aqdi-rsvp',JSON.stringify({name,mobile}));}catch{}
- const msg='AQDI RSVP – Sevuri & Rahma\nName: '+name+'\nMobile: '+mobile+'\n\nI confirm my attendance on 23 October 2026. Kareem, please verify my RSVP and arrange my entry pass after approval.';
+ const msg='AQDI RSVP – Sevuri & Rahma\nName: '+name+'\nMobile: '+mobile+'\n\nI confirm my attendance on 23 October 2026. Kareem, please verify my RSVP and arrange my entry pass after approval.'+'\n\nApproval dashboard: '+String(window.AQDI_CONFIG.dashboardUrl||'');
  // First register the RSVP in Google Apps Script; only then open WhatsApp.
  const endpoint=String(window.AQDI_CONFIG.backendUrl||'').trim();
  if(!endpoint){$('rsvp-status').textContent='RSVP registration is temporarily unavailable.';return;}
